@@ -1,7 +1,7 @@
 import requests 
 import xml.etree.ElementTree as ET #for parsing XML
-import numpy
-import pandas
+import numpy as np
+import pandas as pd
 
 #create dictionary for xml data to be stored in
 #geneData = {}
@@ -17,6 +17,7 @@ foldChangeList = []
 
 for geneID in root.inter('gene-id'):
     geneIDList.append(geneID)
+    print(geneID)
 
 for foldChange in root.inter('fold-change'):
     foldChangeList.append(foldChange)
