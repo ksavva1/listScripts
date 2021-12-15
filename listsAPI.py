@@ -10,9 +10,15 @@ requestURL = 'http://mouse.brain-map.org/api/v2/data/query.xml?criteria=service:
 r = requests.get(requestURL)
 soup = BeautifulSoup(r.content, 'html.parser')
 list(soup.children)
+
 geneIDList = soup.find_all('gene-id')
 foldChangeList = soup.find_all('fold-change')
+geneSymbolList = soup.find_all('gene-symbol')
 
-geneDF = pd.DataFrame({'geneID':geneIDList, 'foldChange':foldChangeList}) #convert list to dataframe
+geneDF = pd.DataFrame({'geneID':geneIDList, 'geneSymbol':geneSymbolList, 'foldChange':foldChangeList}) #convert list to dataframe
+geneDF['foldChange'].astype('float')
 
-print(geneDF)
+tomato = geneDF['foldChange'].between(0.9, 1.1, inclusive=False)
+
+#print(geneDF)
+print(tomato)
