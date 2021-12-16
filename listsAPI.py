@@ -22,18 +22,13 @@ for i in fold:
     i = str(i)
     temp = i[:-14]
     temp2 = temp[13:]
-    foldChangeList.append(temp2)
-print(foldChangeList)
+    foldChangeList.append(float(temp2))
 
 geneDF = pd.DataFrame({'geneID':geneIDList, 'geneSymbol':geneSymbolList, 'foldChange':foldChangeList}) #convert list to dataframe
 
-print(geneDF.dtypes)
-#CHANGE DT of FOLD CHANGE TO INT
-
-#-----------------data splicing methods-----------------------------
-#tomato = geneDF['foldChange'].between(0.9, 1.1, inclusive=False)
-#tomato = geneDF[(geneDF['foldChange'] > 0) & (geneDF['foldChange'] < 14)]
-#print(tomato)
-
 #print(geneDF.dtypes)
 print(geneDF)
+
+#data splicing
+highCorr = geneDF[(geneDF['foldChange'] > 0.9) & (geneDF['foldChange'] < 1.1)]
+print(highCorr)
