@@ -1,0 +1,22 @@
+INPUT[GENEID, EXPRESSIONENERGY, COORDINATE]
+
+*COUNTER TO TRACK DUPLICATE OPERATIONS*
+
+FOR Z1 IN Z AXIS: 
+    FOR Z2 IN Z AXIS:
+        FOR Y1 IN Y AXIS:
+            FOR Y2 IN Y AXIS:
+                FOR X1 IN X AXIS:
+                    FOR X2 IN X AXIS:
+                        FILE WRITING START
+                        FOR I IN GENELIST:
+                            FOLDCHANGE = EXPRESSION(I,Z1,Y1,X1)/EXPRESSION(I,Z2,Y2,X2)
+                            FILE WRITE FOLD CHANGE
+                        FILE WRITING STOP
+                        
+EXPRESSION(I,Z,Y,X)
+    RETURN(EXPRESSIONENERGY)
+
+OUTPUT[GENEID, FOLDCHANGE, SEEDVOXEL, TARGETVOXEL]
+
+//Goal: compare the expression value of every gene at ever seed point to every other seed point
