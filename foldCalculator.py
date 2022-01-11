@@ -1,6 +1,16 @@
-#function to get expression energy
-def expression(i,x,y,z)):
+import cv2
+import requests 
 
+#download file
+sampleNum = 0
+for j in range(1,100,1):
+    requestURL = 'http://api.brain-map.org/grid_data/download/' + j
+
+#save intensity data as a 
+img = cv2.imread("path/to/img")
+
+#function to get expression energy
+def expression(i,x,y,z):
 
 
 #loop through all points in downloaded file
