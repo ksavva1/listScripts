@@ -5,7 +5,9 @@ import requests, zipfile, io
 #download file
 for j in range(1,100,1):
     requestURL = 'http://api.brain-map.org/grid_data/download/' + j
-    r = requests.get(requestURL, stream=True)
+    webbrowser.open(requestURL)
+
+#DO NEXT - UNZIP FILES
     z = zipfile.ZipFile(io.BytesIO(r.content))
     z.extractall(/Users/katiesavva/Downloads)
 
