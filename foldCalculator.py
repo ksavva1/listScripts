@@ -1,19 +1,30 @@
-import cv2, os
+import cv2, os, webbrowser
 import numpy as np
-import requests, zipfile, io 
+import zipfile
+import time
 
-#download file
-for j in range(1,100,1):
-    requestURL = 'http://api.brain-map.org/grid_data/download/' + j
+#download and unzip file
+for j in range(123,127,1):
+    requestURL = 'http://api.brain-map.org/grid_data/download/' + str(j)
     webbrowser.open(requestURL)
 
-#DO NEXT - UNZIP FILES
-    z = zipfile.ZipFile(io.BytesIO(r.content))
-    z.extractall(/Users/katiesavva/Downloads)
+    time.sleep(6)
 
-    #delete file or whole folder (so I dont clog up my computer)
-    #os.remove("FileName")
-    #os.rmdir("myfolder")
+    dir_name = '/Users/katiesavva/Downloads'
+    extension = ".zip"
+    os.chdir(dir_name) #change directory from working dir to dir with files
+
+    for item in os.listdir(dir_name): 
+        if item.endswith(extension): 
+            fileName = os.path.abspath(item) #get full path of files
+            zipRef = zipfile.ZipFile(fileName) #create zipfile object
+            zipRef.extractall(dir_name) 
+            zipRef.close()
+            os.remove(fileName) #delete zipped file
+
+    oldName = 'energy.mhd'
+    newName = str(j) + '.mhd'
+    os.rename(oldName, newName)
 
 #save intensity data as an array
 img = cv2.imread('path/to/img', 1)
