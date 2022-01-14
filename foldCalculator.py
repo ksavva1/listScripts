@@ -29,18 +29,22 @@ def getArray(dlCounter):
     itkImage = sitk.ReadImage(newName)
     #convert the image to a numpy array and shuffle dimensions to get axis in the order z,y,x
     sitkArray = sitk.GetArrayFromImage(itkImage)
-    return sitkArray, fileName
+
+    zAxis = sitkArray.shape[0]
+    yAxis = sitkArray.shape[1]
+    xAxis = sitkArray.shape[2]
+
+    return sitkArray, fileName, zAxis, yAxis, xAxis
 
 #function to get expression energy out of seed and target arrays
 def expression(w,x,y,z):
-    return w[x][y][z]
+    return w[z][y][x]
 
 targetCounter = 124
 
 for i in range(123,127,1): #change to 0,max,1 after tests are done and add clause for when the url doesnt download anything
-    seedArray, seedName = getArray(i)
-    targetArray, targetName = getArray(targetCounter) # +1 after each round of comparisons to compare the og array with the next array.
-
+    seedArray, seedName, zAxis, yAxis, xAxis = getArray(i)
+    targetArray, targetName, zAxis, yAxis, xAxis = getArray(targetCounter) # +1 after each round of comparisons to compare the og array with the next array.
 
     #loop through all points in downloaded file
     for z1 in zAxis:
@@ -53,11 +57,11 @@ for i in range(123,127,1): #change to 0,max,1 after tests are done and add claus
                             seed = str(x1) + "," + str(y1) + "," + str(z1)
                             target = str(x2) + "," + str(y2) + "," + str(z2)
                             #open file for that location
-                            f = open('%s.csv' % seedName, 'a')
+                            f = open('%s.csv' % seed, 'a')
                             #for every gene present, compare expression values in the 2 locations = fold change
                             foldChange = expression(seedArray,x1,y1,z1) / expression(targetArray,x2,y2,z2)
-                            #write fold change, gene id, seed & target voxel to location file
-                            f.write("Target: " + targetName + " Experiment ID: " + str(i) + "Seed Coordinates: " + seed + "Target Coordinates: " + target + " Fold Change: " + str(foldChange)
+                            #write fold change, experiment id, seed & target voxel to seed gene file
+                            f.write("Seed Gene: " + seedName + "Target Gene: " + targetName + " Experiment ID: " + str(i) + "Target Coordinates: " + target + " Fold Change: " + str(foldChange)
                             f.close()
 
     targetCounter += 1
