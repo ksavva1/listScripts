@@ -36,10 +36,6 @@ def getArray(dlCounter):
 
     return sitkArray, fileName, zAxis, yAxis, xAxis
 
-#function to get expression energy out of seed and target arrays
-def expression(w,x,y,z):
-    return w[z][y][x]
-
 targetCounter = 124
 
 for i in range(123,127,1): #change to 0,max,1 after tests are done and add clause for when the url doesnt download anything
@@ -59,7 +55,7 @@ for i in range(123,127,1): #change to 0,max,1 after tests are done and add claus
                             #open file for that location
                             f = open('%s.csv' % seed, 'a')
                             #for every gene present, compare expression values in the 2 locations = fold change
-                            foldChange = expression(seedArray,x1,y1,z1) / expression(targetArray,x2,y2,z2)
+                            foldChange = (seedArray[x1][y1][z1]) / (targetArray[x2][y2][z2])
                             #write fold change, experiment id, seed & target voxel to seed gene file
                             f.write("Seed Gene: " + seedName + "Target Gene: " + targetName + " Experiment ID: " + str(i) + "Target Coordinates: " + target + " Fold Change: " + str(foldChange)
                             f.close()
