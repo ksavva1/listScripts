@@ -8,15 +8,15 @@ for j in range(123,127,1):
     webbrowser.open(requestURL)
     time.sleep(6) #to give time for file to actually download
 
-    dir_name = '/Users/katiesavva/Downloads'
+    dirName = '/Users/katiesavva/Downloads'
     extension = ".zip"
-    os.chdir(dir_name) #change directory from working dir to dir with files
+    os.chdir(dirName) #change directory from working dir to dir with files
 
-    for item in os.listdir(dir_name): 
+    for item in os.listdir(dirName): 
         if item.endswith(extension): 
             fileName = os.path.abspath(item) #get full path of files
             zipRef = zipfile.ZipFile(fileName) #create zipfile object
-            zipRef.extractall(dir_name) 
+            zipRef.extractall(dirName) 
             zipRef.close()
             os.remove(fileName) #delete zipped file
     
@@ -25,12 +25,14 @@ for j in range(123,127,1):
     newName = str(j) + '.mhd'
     os.rename(oldName, newName)
 
-
     #save intensity data as an array
     itkImage = sitk.ReadImage(newName)
     #convert the image to a numpy array and shuffle dimensions to get axis in the order z,y,x
     sitkArray = sitk.GetArrayFromImage(itkImage)
+    print(sitkArray)
 
+    f = open('%s.txt' % str(j), "a") 
+    f.write(sitkArray)
 
 #function to get expression energy
 #def expression(i,x,y,z):
