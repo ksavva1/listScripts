@@ -43,25 +43,29 @@ def getArray(dlCounter):
 targetCounter = 2
 
 for i in range(1,900000,1): #change to 0,max,1 after tests are done and add clause for when the url doesnt download anything
-    seedArray, seedName, zAxis, yAxis, xAxis = getArray(i)
-    targetArray, targetName, zAxis, yAxis, xAxis = getArray(targetCounter) # +1 after each round of comparisons to compare the og array with the next array.
+    try:
+        seedArray, seedName, zAxis, yAxis, xAxis = getArray(i)
+        targetArray, targetName, zAxis, yAxis, xAxis = getArray(targetCounter) # +1 after each round of comparisons to compare the og array with the next array.
 
-    #loop through all points in downloaded file
-    for z1 in range(zAxis-1):
-        for z2 in range(zAxis-1):
-            for y1 in range(yAxis-1):
-                for y2 in range(yAxis-1):
-                    for x1 in range(xAxis-1):
-                        for x2 in range(xAxis-1):
-                            #coordinates for seed and target points
-                            seed = str(x1) + "," + str(y1) + "," + str(z1)
-                            target = str(x2) + "," + str(y2) + "," + str(z2)
-                            #open file for that location
-                            f = open('%s.csv' % seed, 'a')
-                            #for every gene present, compare expression values in the 2 locations = fold change
-                            foldChange = (seedArray[z1][y1][x1]) / (targetArray[z2][y2][x2])
-                            #write fold change, experiment id, seed & target voxel to seed gene file
-                            f.write("Seed Gene: " + seedName + "Target Gene: " + targetName + " Experiment ID: " + str(i) + "Target Coordinates: " + target + " Fold Change: " + str(foldChange))
-                            f.close()
+        #loop through all points in downloaded file
+        for z1 in range(zAxis-1):
+            for z2 in range(zAxis-1):
+                for y1 in range(yAxis-1):
+                    for y2 in range(yAxis-1):
+                        for x1 in range(xAxis-1):
+                            for x2 in range(xAxis-1):
+                                #coordinates for seed and target points
+                                seed = str(x1) + "," + str(y1) + "," + str(z1)
+                                target = str(x2) + "," + str(y2) + "," + str(z2)
+                                #open file for that location
+                                f = open('%s.csv' % seed, 'a')
+                                #for every gene present, compare expression values in the 2 locations = fold change
+                                foldChange = (seedArray[z1][y1][x1]) / (targetArray[z2][y2][x2])
+                                #write fold change, experiment id, seed & target voxel to seed gene file
+                                f.write("Seed Gene: " + seedName + "Target Gene: " + targetName + " Experiment ID: " + str(i) + "Target Coordinates: " + target + " Fold Change: " + str(foldChange))
+                                f.close()
 
-    targetCounter += 1
+        targetCounter += 1
+
+    except:
+        targetCounter += 1
