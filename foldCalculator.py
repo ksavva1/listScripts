@@ -40,9 +40,9 @@ def getArray(dlCounter):
     except:
         pass
 
-targetCounter = 124
+targetCounter = 2
 
-for i in range(123,127,1): #change to 0,max,1 after tests are done and add clause for when the url doesnt download anything
+for i in range(1,900000,1): #change to 0,max,1 after tests are done and add clause for when the url doesnt download anything
     seedArray, seedName, zAxis, yAxis, xAxis = getArray(i)
     targetArray, targetName, zAxis, yAxis, xAxis = getArray(targetCounter) # +1 after each round of comparisons to compare the og array with the next array.
 
